@@ -103,17 +103,13 @@ export default {
             .then(response =>{
                 localStorage.setItem("access_token", response.data.access_token)
                 localStorage.setItem("refresh_token", response.data.refresh_token)
+                this.$router.push({name: 'Lists'})
             } )
             .catch(error => {
                 if(error.response.status == 401) alert("Email o contraseña erroneos")
             })
             .finally(() => this.loading = false)
-            // Se va a logear con un email y contraseña
-            // Validar un email correcto y una contraseña de mas de 6 caracteres;
-
-
-            // Guardar en la memoria del navegador el access_token y el refresh_token
-            // Si hay algun error mostrarlo en pantalla.
+            
         }
     }
 }
