@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-content">
           <div class="row">
-            <form class="col s12" v-on:submit.prevent="login">
+            <form class="col s12" @submit.prevent="login">
               <div class="row">
                 <div class="input-field col s12">
                   <input
