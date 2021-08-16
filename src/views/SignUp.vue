@@ -38,7 +38,7 @@
                   />
                   <label for="password">Password</label>
                   <span v-show="password_error && password_touch">
-                    La contraseña tiene que tener más de 6 caracteres
+                    La contraseña tiene que tener más de 7 caracteres
                   </span>
                 </div>
 
