@@ -15,6 +15,11 @@ const routes = [
     component: () => import( '../views/Lists.vue')
   },
   {
+    path: '/signup',
+    name: 'Signup',
+    component: ()=> import ('../views/SignUp.vue')
+  },
+  {
     path: '',
     redirect: { name: 'Login'}
   }
@@ -26,7 +31,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const access_token = localStorage.getItem('access_token')
-  if (to.name !== 'Login' && !access_token) next({ name: 'Login' })
+  if(to.name == 'Signup' && !access_token) next()
+  else if (to.name !== 'Login' && !access_token) next({ name: 'Login' })
   else next()
 })
 
