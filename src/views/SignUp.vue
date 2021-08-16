@@ -106,7 +106,7 @@ export default {
       return !reg.test(this.email);
     },
     password_error() {
-      return this.password.length < 6;
+      return this.password.length < 7;
     },
     password2_error() {
       return this.password != this.password2;
@@ -123,10 +123,12 @@ export default {
         axios.post("/auth/signup", body)
         .then(()=>{
             alert("Te has registrado correctamente")
+            this.$router.push({name: 'Login'})
         })
         .catch(error=>{
             if (error.response.status == 400) alert("algún campo no es correcto")
-            console.error(error)
+            else if (error.response.status == 409) alert("el email ya existe")
+            else alert('Error interno pruebe otra vez')
         })
     },
   },
