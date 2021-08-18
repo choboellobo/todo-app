@@ -1,12 +1,12 @@
 <template>
     <div class="secondary-content">
         <button
-            ref="trigger"
-            class="secondary-content dropdown-trigger btn" :data-target="'dropdown' +  timestamp ">
+            :id="uuid"
+            class="secondary-content dropdown-trigger btn" :data-target="'dropdown' +  uuid ">
             <i class="material-icons">more_vert</i>
         </button>
 
-        <ul :id="'dropdown' +  timestamp " class="dropdown-content">
+        <ul :id="'dropdown' +  uuid " class="dropdown-content">
             <li v-for="(option,index) in options" :key="index">
                 <a href="#" @click.prevent="clickElementDropDown(index)">{{option}}</a>
             </li>
@@ -16,6 +16,7 @@
 
 <script>
 import M from 'materialize-css'
+import { v4 as uuidv4 } from 'uuid'; 
 export default {
     props:{
         options:{
@@ -25,7 +26,7 @@ export default {
     },
     data() {
         return {
-            timestamp: null
+            uuid: uuidv4()
         }
     },
     methods: {
@@ -35,9 +36,10 @@ export default {
     },
     mounted() {
 
-        this.timestamp = Date.now()
-        const elems = document.querySelectorAll(".dropdown-trigger")
-        M.Dropdown.init(elems, {});
+        setTimeout(() => {
+            const elems = document.getElementById(this.uuid)
+            M.Dropdown.init(elems, {});
+        }, 1000)
     }
 };
 </script>

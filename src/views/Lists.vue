@@ -124,15 +124,35 @@ export default {
     },
 
     deleteList(id) {
-      console.log("voy a borrar la lista " + id )
+      axios.delete(`/api/v1/lists/${id}`)
+      .then(() => {
+        console.log("Lista borrada");
+        this.lists = this.lists.filter(list=> list.id !== id)
+      })
+      .catch((error)=>{
+        if (error.response.status === 400) alert("No se pudo eliminar la lista")
+        if (error.response.status === 401) alert("No tienes permisos para borra esta lista")
+
+      })
     },
-    shareList() {
-      console.log("share")
+    shareList(id) {
+      if(navigator.share) {
+        const body = {
+          title: 'Te comparto mi lista',
+          text: 'Hola amigo pulsa en el link y accede a mi lista',
+          url: axios.defaults.baseURL + '/api/v1/lists/sync/' + id
+        }
+        navigator.share(body)
+          .then()
+          .catch(error => console.log(error))
+        }else{
+          alert("Tu navegador no puede compartir esta lista")
+        }
     },
     dropdownOptions(index, id){
       switch(index){
         case 0:
-          this.shareList()
+          this.shareList(id)
           break;
         case 1:
           this.deleteList(id)
