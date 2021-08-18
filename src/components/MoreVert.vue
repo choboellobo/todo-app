@@ -7,7 +7,9 @@
         </button>
 
         <ul :id="'dropdown' +  timestamp " class="dropdown-content">
-            <li v-for="(option,index) in options" :key="index"><a href="">{{option}}</a></li>
+            <li v-for="(option,index) in options" :key="index">
+                <a href="#" @click.prevent="clickElementDropDown(index)">{{option}}</a>
+            </li>
         </ul>
     </div>
 </template>
@@ -26,10 +28,15 @@ export default {
             timestamp: null
         }
     },
+    methods: {
+        clickElementDropDown(index) {
+            this.$emit("onClickOption", index); 
+        }
+    },
     mounted() {
-        this.timestamp = Date.now()
 
-        const elems = this.$refs.trigger;
+        this.timestamp = Date.now()
+        const elems = document.querySelectorAll(".dropdown-trigger")
         M.Dropdown.init(elems, {});
     }
 };

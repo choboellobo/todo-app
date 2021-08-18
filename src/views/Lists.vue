@@ -39,13 +39,13 @@
               <ul class="s12 collection with-header">
                 <li class="collection-header"><h4>Listas</h4></li>
                 <li
-                  v-for="(task, index) in lists"
+                  v-for="(list, index) in lists"
                   :key="index"
                   class="collection-item"
                 >
                   <div>
-                    {{ task.name }}
-                  <MoreVert :options="['Compartir','Eliminar']" /> 
+                    {{ list.name }} - {{list.id}}
+                    <MoreVert :options="['Compartir','Eliminar']" @onClickOption="dropdownOptions($event, list.id)" /> 
                   </div>
                 </li>
               </ul>
@@ -90,6 +90,7 @@ export default {
   },
   methods: {
 
+
     getLists() {
       axios
         .get("/api/v1/lists")
@@ -122,8 +123,22 @@ export default {
         .finally(() => (this.loading = false));
     },
 
-    deleteList() {},
-    shareList() {},
+    deleteList(id) {
+      console.log("voy a borrar la lista " + id )
+    },
+    shareList() {
+      console.log("share")
+    },
+    dropdownOptions(index, id){
+      switch(index){
+        case 0:
+          this.shareList()
+          break;
+        case 1:
+          this.deleteList(id)
+          break;
+      }
+    }
   },
 };
 </script>
